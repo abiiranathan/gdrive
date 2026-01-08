@@ -129,7 +129,7 @@ func newDriveClient(ctx context.Context, client *http.Client) (*DriveClient, err
 //	    log.Fatal(err)
 //	}
 func NewDriveClientForServiceAccount(ctx context.Context, jsonCredentials []byte) (*DriveClient, error) {
-	config, err := google.JWTConfigFromJSON(jsonCredentials, drive.DriveReadonlyScope)
+	config, err := google.JWTConfigFromJSON(jsonCredentials, drive.DriveScope)
 	if err != nil {
 		return nil, fmt.Errorf("unable to parse service account credentials: %w", err)
 	}
@@ -182,7 +182,7 @@ func NewDriveClientWithToken(ctx context.Context, config *oauth2.Config, tok *oa
 //	config, err := gdrive.GetConfigFromJSON(credentials)
 //	// Use config.AuthCodeURL() to start OAuth2 flow
 func GetConfigFromJSON(jsonCredentials []byte) (*oauth2.Config, error) {
-	return google.ConfigFromJSON(jsonCredentials, drive.DriveReadonlyScope)
+	return google.ConfigFromJSON(jsonCredentials, drive.DriveScope)
 }
 
 // ListFiles retrieves all non-folder files from Google Drive with folder path information.
