@@ -86,7 +86,7 @@ type FileInfo struct {
 	FolderPath  string   // Full folder path (e.g., "My Drive/Projects/2024")
 }
 
-// newDriveClient is the internal helper to initialize the Google Drive service.
+// NewDriveClient is the internal helper to initialize the Google Drive service.
 // It creates a new drive.Service using the provided HTTP client.
 //
 // Parameters:
@@ -96,7 +96,7 @@ type FileInfo struct {
 // Returns:
 //   - *DriveClient: Initialized client ready for use
 //   - error: Any error encountered during service creation
-func newDriveClient(ctx context.Context, client *http.Client) (*DriveClient, error) {
+func NewDriveClient(ctx context.Context, client *http.Client) (*DriveClient, error) {
 	srv, err := drive.NewService(ctx, option.WithHTTPClient(client))
 	if err != nil {
 		return nil, fmt.Errorf("unable to create Drive service: %w", err)
@@ -134,7 +134,7 @@ func NewDriveClientForServiceAccount(ctx context.Context, jsonCredentials []byte
 		return nil, fmt.Errorf("unable to parse service account credentials: %w", err)
 	}
 	client := config.Client(ctx)
-	return newDriveClient(ctx, client)
+	return NewDriveClient(ctx, client)
 }
 
 // NewDriveClientWithToken creates a DriveClient using an existing OAuth2 token.
@@ -157,7 +157,7 @@ func NewDriveClientForServiceAccount(ctx context.Context, jsonCredentials []byte
 //	client, err := gdrive.NewDriveClientWithToken(ctx, config, token)
 func NewDriveClientWithToken(ctx context.Context, config *oauth2.Config, tok *oauth2.Token) (*DriveClient, error) {
 	client := config.Client(ctx, tok)
-	return newDriveClient(ctx, client)
+	return NewDriveClient(ctx, client)
 }
 
 // GetConfigFromJSON parses OAuth2 user credentials JSON into an oauth2.Config.
